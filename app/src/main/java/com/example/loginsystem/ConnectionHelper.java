@@ -16,7 +16,7 @@ public class ConnectionHelper {
         database="Cooking_app";
         name="klein";
         pass="klein";
-        port="1433";
+        port="55655";
 
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

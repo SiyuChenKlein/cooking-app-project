@@ -1,4 +1,5 @@
 package com.example.loginsystem;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (!confirm_password.getText().toString().equals(password.getText().toString())) {
                 message.setText("Password doesn't match, enter again.");
+                password.getText().clear();
+                confirm_password.getText().clear();
             }
             else {
                 ConnectionHelper connectionHelper= new ConnectionHelper();
@@ -71,11 +74,13 @@ public class MainActivity extends AppCompatActivity {
                 Statement st=connect.createStatement();
                 ResultSet rs=st.executeQuery(query);
                 if(rs.next()){
-                    message.setText("test4");
+
                     message.setText("Account exists, change your accountname.");
+                    name.getText().clear();
+                    password.getText().clear();
+                    confirm_password.getText().clear();
                 }
                 else {
-                    message.setText("test5");
                     SetAccount(v);
                     message.setText("Create Account Success!");
                 }
@@ -84,5 +89,10 @@ public class MainActivity extends AppCompatActivity {
         catch(Exception ex){
 
         }
+    }
+
+    public void BackToLogin(View v){
+        Intent i = new Intent(getApplicationContext(),MainActivity2.class);
+        startActivity(i);
     }
 }

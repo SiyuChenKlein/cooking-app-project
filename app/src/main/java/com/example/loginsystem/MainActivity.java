@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText confirm_password;
     private Button confirm;
     private Button back;
+    private TextView message;
     Connection connect;
     String ConnectionResult="";
 
@@ -33,24 +34,20 @@ public class MainActivity extends AppCompatActivity {
         confirm_password=(EditText)findViewById(R.id.Confirm_Password);
         confirm=(Button)findViewById(R.id.Confirm_Button);
         back=(Button)findViewById(R.id.Back_Button);
+        message=(TextView) findViewById(R.id.message);
     }
 
-    public void GetTextFromSQL(View v){
-        TextView tx1=(TextView) findViewById((R.id.textView6));
+    public void SetAccount(View v){
         TextView tx2=(TextView) findViewById((R.id.textView4));
 
         try{
             ConnectionHelper connectionHelper= new ConnectionHelper();
             connect= connectionHelper.connectionclass();
             if(connect!=null){
-                String query="Select * from Useraccountinfo";
+                String query="INSERT INTO Useraccountinfo (Uname,Upassword,Uavailability) VALUES ('"+this.name.getText().toString()+"','"+this.password.getText().toString()+"',1)";
                 Statement st=connect.createStatement();
-                ResultSet rs=st.executeQuery(query);
-
-                while(rs.next()){
-                    tx1.setText(rs.getString( 1));
-                    tx2.setText(rs.getString( 2));
-                }
+                st.executeUpdate(query);
+                st.close();
             }
             else{
                 ConnectionResult="Check Connection";
@@ -61,7 +58,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   // private void checkavailablility(String Uname, String Upassword, String Cpassword){
+    public void Check(View v){
 
-    //}
+        try {
+            if (!confirm_password.getText().toString().equals(password.getText().toString())) {
+                message.setText("Password doesn't match, enter again.");
+            }
+            else {
+                ConnectionHelper connectionHelper= new ConnectionHelper();
+                connect= connectionHelper.connectionclass();
+                String query="SELECT * FROM Useraccountinfo WHERE Uname='"+this.name.getText().toString()+"'";
+                Statement st=connect.createStatement();
+                ResultSet rs=st.executeQuery(query);
+                if(rs.next()){
+                    message.setText("test4");
+                    message.setText("Account exists, change your accountname.");
+                }
+                else {
+                    message.setText("test5");
+                    SetAccount(v);
+                    message.setText("Create Account Success!");
+                }
+            }
+        }
+        catch(Exception ex){
+
+        }
+    }
 }

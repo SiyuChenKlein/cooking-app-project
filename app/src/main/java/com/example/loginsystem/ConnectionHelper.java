@@ -13,10 +13,10 @@ public class ConnectionHelper {
     @SuppressLint("NewApi")
     public Connection connectionclass(){
         ip="192.168.3.23";
-        database="Cooking_app";
+        database="Cooking_App";
         name="klein";
-        pass="klein";
-        port="55655";
+        pass="Project666";
+        port="1433";
 
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -25,7 +25,7 @@ public class ConnectionHelper {
 
         try{
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            ConnectionURL="jdbc:jtds:sqlserver://"+ip+":"+port+";"+"databasename="+database+";user="+name+";password="+pass+";";
+            ConnectionURL="jdbc:jtds:sqlserver://cookingapp.database.windows.net:1433;DatabaseName=Cooking_App;user=klein@cookingapp;password=Project666;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             connection= DriverManager.getConnection(ConnectionURL);
         }
         catch (Exception ex){
